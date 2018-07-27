@@ -5,12 +5,15 @@ class Queue{
 	int used_;
 	void grow(){
 		T* tmp=new T[capacity_*2];
-		for(int i=0;i<used_;i++){
-			tmp[i]=theQueue_[i];
+		int j;
+		for(int i=0,j=front_;i<used_;i++,j=(j+1)%capacity_){
+			tmp[i]=theQueue_[j];
 		}
 		delete [] theQueue_;
 		theQueue_=tmp;
-		caacity_=capacity_*2;
+		capacity_=capacity_*2;
+		front_=0;
+		back_=used_;
 	}
 public:
 	Queue(){
@@ -36,5 +39,8 @@ public:
 	}
 	bool isEmpty() const{
 		return used_==0;
+	}
+	~Queue(){
+		delete [] theQueue_;
 	}	
 };

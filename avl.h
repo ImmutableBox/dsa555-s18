@@ -6,15 +6,32 @@ class AVL{
 		T data_;
 		Node* left_;
 		Node* right_;
+		int height_;
 		Node(const T& data,Node* lt=nullptr,Node* rt=nullptr){
 			data_=data;
 			left_=lt;
 			right_=rt;
+			height_=1;
+		}
+		int leftHeight() const{
+			return left_?left_->height_:0;
+		}
+		int rightHeight() const{
+			return right_?right_->height_:0;
+		}
+		int nodeBalance() const{
+			return rightHeight() - leftHeight();
+		}
+		void updateHeight(){
+			if(rightHeight() > leftHeight()){
+				height_=rightHeight() + 1;
+			}
+			else{
+				height_=leftHeight() + 1;
+			}
 		}
 	};
 	Node* root_;
-
-
 
 	//insert data into subtree with root subroot
 	void insert(const T& data, Node*& subroot){
@@ -28,7 +45,26 @@ class AVL{
 			else{
 				insert(data,subroot->right_);
 			}
+			if(subroot->nodeBalance() >= 2){
+				//fix with rotation
+			}
+			else if(subroot->nodeBalance() <= -2){
+				//fix with rotation
+			}
+			subroot->updateHeight();
 		}
+	}
+
+	void leftRotate(Node*& A){
+		Node* B=A->right_;
+		Node* Y=B->left_;
+		A->right_=Y;
+		B->left_=A;
+		A=B;
+
+	}
+	void rightRotate(Node*& A){
+
 	}
 	void printPreOrder(Node* subroot)const{
 		if(subroot){
@@ -63,7 +99,7 @@ public:
 		printInOrder(root_);
 		std::cout << std::endl;
 	}
-	void insertRecursive(const T& data){
+	void insert(const T& data){
 		insert(data,root_);
 	}
 

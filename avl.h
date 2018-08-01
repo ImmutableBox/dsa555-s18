@@ -1,7 +1,7 @@
 #include "arrqueue.h"
 #include <iostream>
 template <class T>
-class BST{
+class AVL{
 	struct Node{
 		T data_;
 		Node* left_;
@@ -52,7 +52,7 @@ class BST{
 		}
 	}
 public:
-	BST(){
+	AVL(){
 		root_=nullptr;
 	}
 	void printPreOrder() const{
@@ -67,60 +67,6 @@ public:
 		insert(data,root_);
 	}
 
-	void insert(const T& data){
-		if(root_==nullptr){
-			root_=new Node(data);
-		}
-		else{
-
-			Node* curr=root_;
-			while(curr != nullptr){
-				if(data < curr->data_){
-					//go left
-					if(curr->left_){
-						curr=curr->left_;
-					}
-					else{
-						curr->left_=new Node(data);
-						curr=nullptr;
-					}
-				}	
-				else{
-					//go right
-					if(curr->right_){
-						curr=curr->right_;
-					}
-					else{
-						curr->right_=new Node(data);
-						curr=nullptr;
-					}
-				}
-			}
-			/*v1
-			Node* previous=nullptr;
-			Node* curr=root_;
-			while(curr != nullptr){
-				previous = curr;
-				if(data < curr->data_){
-					//go left
-					curr=curr->left_;
-				}	
-				else{
-					//go right
-					curr=curr->right_;
-				}
-			}
-			if(data < previous->data_){
-				previous->left_=new Node(data);
-			}
-			else{
-				previous->right_=new Node(data);
-			}*/
-
-		}
-
-	}
-	void remove(const T& remove);
 	bool exists(const T& data) const{
 		bool rc=false;
 		Node* curr=root_;
@@ -156,7 +102,7 @@ public:
 			std::cout << "tree is empty" << std::endl;
 		}
 	}
-	~BST(){
+	~AVL(){
 		destroy(root_);
 	}
 };

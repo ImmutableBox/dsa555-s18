@@ -3,6 +3,8 @@ class Queue{
 	T* theQueue_;
 	int capacity_;
 	int used_;
+	int front_;
+	int back_;
 	void grow(){
 		T* tmp=new T[capacity_*2];
 		int j;
@@ -20,22 +22,29 @@ public:
 		theQueue_=new T[50];
 		capacity_=50;
 		used_=0;
+		front_=0;
+		back_=0;
 	}
 	void enqueue(const T& data){
 		if(used_==capacity_){
 			grow();
 		}
-		theQueue_[used_++]=data;
+		theQueue_[back_]=data;
+		back_=(back_+1)%capacity_;
+		used_++;
 	}
 	void dequeue(){
 		if(!isEmpty()){
 			used_--;
+			front_=(front_+1)%capacity_;
 		}
 	}
 	T front() const{
 		if(!isEmpty()){
-			return theQueue_[used_-1];
+			return theQueue_[front_];
 		}
+		return T{};
+
 	}
 	bool isEmpty() const{
 		return used_==0;

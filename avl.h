@@ -46,12 +46,23 @@ class AVL{
 				insert(data,subroot->right_);
 			}
 			if(subroot->nodeBalance() >= 2){
-				//fix with rotation
+				if(subroot->right_->nodeBalance() == 1){
+					leftRotate(subroot);
+					subroot->left_->updateHeight();
+					subroot->updateHeight();
+				}
 			}
 			else if(subroot->nodeBalance() <= -2){
-				//fix with rotation
+				if(subroot->right_->nodeBalance() == -1){
+					rightRotate(subroot);
+					subroot->right_->updateHeight();
+					subroot->updateHeight();										subroot->updateHeight();
+				}
 			}
-			subroot->updateHeight();
+			else{
+				subroot->updateHeight();
+
+			}
 		}
 	}
 
@@ -64,7 +75,11 @@ class AVL{
 
 	}
 	void rightRotate(Node*& A){
-
+		Node* B = A ->left_;
+		Node* Y = B->right_;
+		A->left_=Y;
+		B->right_=A;
+		A=B;
 	}
 	void printPreOrder(Node* subroot)const{
 		if(subroot){

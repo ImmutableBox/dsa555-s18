@@ -62,6 +62,10 @@ int main(void){
 		std::cout << "Test " << i+1 << " : ";
 		if(testTree[i]==correctTree[i]){
 			std::cout << "remove(" << removeValues[i] << ") was correctly done." << std::endl;
+			std::cout << "preOrder() :";
+			testTree[i].printPreOrder();
+			std::cout << "inOrder() :";
+			testTree[i].printInOrder();
 		}
 		else{
 			std::cout << "remove(" << removeValues[i] << ") was not correct" << std::endl;
